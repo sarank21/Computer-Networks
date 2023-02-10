@@ -2,8 +2,10 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <stdio.h>
 
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +40,9 @@ passivesock(const char *service, const char *transport, int qlen)
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = INADDR_ANY;
 
+	printf("*****AT PASSIVE SOCK (BIND)********* \n");
+	  printf("Client IP address: %s\n", inet_ntoa(sin.sin_addr));
+
     /* Map service name to port number */
 	if ( (pse = getservbyname(service, transport)) != NULL )
 		sin.sin_port = htons(ntohs((unsigned short)pse->s_port)
@@ -54,6 +59,10 @@ passivesock(const char *service, const char *transport, int qlen)
 		type = SOCK_DGRAM;
 	else
 		type = SOCK_STREAM;
+
+	printf("*****AT PASSIVESOCK (BIND)********* \n");
+	  printf("Client IP address: %s\n", inet_ntoa(sin.sin_addr));
+	  printf("Client port      : %d\n", ntohs(sin.sin_port));
 
     /* Allocate a socket */
 	s = socket(PF_INET, type, ppe->p_proto);

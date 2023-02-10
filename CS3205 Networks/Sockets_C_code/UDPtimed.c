@@ -68,7 +68,9 @@ main(int argc, char *argv[])
 	  printf("Sending time information...\n");
 	  (void) sendto(sock, (char *)&now, sizeof(now), 0,
 			(struct sockaddr *)&fsin, sizeof(fsin));
-
+	printf("************** \n");
+	  printf("Client IP address: %s\n", inet_ntoa(fsin.sin_addr));
+	  printf("Client port      : %d\n", ntohs(fsin.sin_port));
 	  printf("************** \n");
 	}
 }

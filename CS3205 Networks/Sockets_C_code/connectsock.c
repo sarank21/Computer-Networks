@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <stdio.h>
 
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -50,7 +51,7 @@ connectsock(const char *host, const char *service, const char *transport )
 
     /* Map host name to IP address, allowing for dotted decimal */
 	if ( phe = gethostbyname(host) )
-		memcpy(&sin.sin_addr, phe->h_addr_list, phe->h_length);
+		memcpy(&sin.sin_addr, phe->h_addr_list[0], phe->h_length);
 	else if ( (sin.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE )
 		errexit("can't get \"%s\" host entry\n", host);
 
@@ -63,6 +64,10 @@ connectsock(const char *host, const char *service, const char *transport )
 		type = SOCK_DGRAM;
 	else
 		type = SOCK_STREAM;
+
+	printf("*****AT CONNECTSOCK (CONNECT)********* \n");
+	  printf("Client IP address: %s\n", inet_ntoa(sin.sin_addr));
+	  printf("Client port      : %d\n", ntohs(sin.sin_port));
 
     /* Allocate a socket */
 	s = socket(PF_INET, type, ppe->p_proto);

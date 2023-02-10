@@ -1,10 +1,13 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <stdio.h>
 
-#include<sys/socket.h>
-#include<sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-#include<netinet/in.h>
+#include <netdb.h>
+#include <string.h>
+#include <stdlib.h>
 
 int main() {
     char server_message[256] = "You have reached the server. Demo for Laasya over";
@@ -16,6 +19,8 @@ int main() {
     ser_address.sin_family = AF_INET;
     ser_address.sin_port = htons(9002);     //function to convert this integer to the Network byte order
     ser_address.sin_addr.s_addr = INADDR_ANY;   //No specific IP. Thus, local IP is used
+
+        printf("Client IP address: %s\n", inet_ntoa(ser_address.sin_addr));
 
     bind(ser_sock, (struct sockaddr *) &ser_address, sizeof(ser_address));
 

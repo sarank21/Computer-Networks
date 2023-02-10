@@ -29,7 +29,7 @@ main(int argc, char *argv[])
 {
 	char	*host = "localhost";	/* host to use if none supplied	*/
 	char	*service = "echo";	/* default service name		*/
-
+	printf("Hello");
 	switch (argc) {
 	case 1:
 		host = "localhost";
@@ -44,7 +44,7 @@ main(int argc, char *argv[])
 		fprintf(stderr, "usage: TCPecho [host [port]]\n");
 		exit(1);
 	}
-
+	printf("Callig function");
 	TCPecho(host, service);
 
 	exit(0);
